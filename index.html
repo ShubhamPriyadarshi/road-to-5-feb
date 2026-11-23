@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Road to 5 Feb</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+:root{
+  --bg:#faf6ef; --surface:#fffdf9; --ink:#22201c; --muted:#6b655b; --line:#e7dfd1;
+  --accent:#1f5a45; --accent-soft:#e4efe9; --gold:#b97a12;
+  --a:#a83a63; --a-soft:#f9e7ee; --s:#2a5d8c; --s-soft:#e4eef7;
+  --warn:#9a4a16; --warn-soft:#fbeadb; --shadow:0 1px 2px rgba(40,30,10,.06),0 6px 20px rgba(40,30,10,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#151412; --surface:#1e1c19; --ink:#efe9de; --muted:#a69f92; --line:#35312a;
+    --accent:#84cbac; --accent-soft:#1c2e27; --gold:#e3b04f;
+    --a:#f092b3; --a-soft:#39202a; --s:#8fbde8; --s-soft:#1b2a39;
+    --warn:#f0a56e; --warn-soft:#382517; --shadow:none; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151412; --surface:#1e1c19; --ink:#efe9de; --muted:#a69f92; --line:#35312a;
+  --accent:#84cbac; --accent-soft:#1c2e27; --gold:#e3b04f;
+  --a:#f092b3; --a-soft:#39202a; --s:#8fbde8; --s-soft:#1b2a39;
+  --warn:#f0a56e; --warn-soft:#382517; --shadow:none; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.side{transition:none !important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.2;margin:0;text-wrap:balance}
+a{color:var(--accent)}
+p{margin:.5em 0}
+ul,ol{margin:.4em 0;padding-left:1.25em}
+li{margin:.25em 0}
+strong{font-weight:650}
+.num{font-variant-numeric:tabular-nums}
+
+/* layout */
+.side{position:fixed;inset:0 auto 0 0;width:272px;background:var(--surface);border-right:1px solid var(--line);padding:calc(20px + env(safe-area-inset-top,0px)) 16px calc(28px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));overflow-y:auto;z-index:30}
+.main{margin-left:272px;padding-block:28px 96px;padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px))}
+.wrap{max-width:880px;margin:0 auto}
+.topbar{display:none}
+.brand{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:21px;font-weight:700}
+.brand small{display:block;font:500 12.5px system-ui,sans-serif;color:var(--muted);letter-spacing:.02em;margin-top:2px}
+.search{width:100%;margin:16px 0 6px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:14.5px}
+.search:focus,.seg button:focus-visible,.nav a:focus-visible,.glass:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nav h4{margin:18px 8px 4px;font:700 11.5px system-ui,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.nav a{display:block;padding:6px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14.5px;line-height:1.35}
+.nav a:hover{background:var(--accent-soft)}
+.nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:650}
+
+/* who toggle */
+.seg{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{flex:1;border:0;background:none;color:var(--muted);font:600 13.5px system-ui,sans-serif;padding:7px 10px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.seg button[data-who="a"][aria-pressed="true"]{background:var(--a-soft);color:var(--a)}
+.seg button[data-who="s"][aria-pressed="true"]{background:var(--s-soft);color:var(--s)}
+.side .seg{margin-top:14px}
+body[data-who="a"] .s-only, body[data-who="s"] .a-only{display:none !important}
+
+/* hero */
+.hero{background:linear-gradient(135deg,var(--accent-soft),var(--surface) 70%);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:var(--shadow)}
+.hero .kicker{font:700 12px system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(28px,4.4vw,42px);margin:6px 0 4px}
+.hero p{color:var(--muted);max-width:60ch}
+.count{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;min-width:132px;flex:1}
+.stat b{display:block;font:700 30px/1.1 "Iowan Old Style",Palatino,Georgia,serif;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.bar{height:8px;background:var(--line);border-radius:99px;margin-top:18px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;width:0}
+.barlab{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:6px}
+
+/* sections */
+.cat{margin:56px 0 0;font:700 12px system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px}
+.cat::after{content:"";flex:1;height:1px;background:var(--line)}
+.sec{margin-top:30px}
+.sec>h2{font-size:25px;margin-bottom:4px}
+.sec>.lede{color:var(--muted);margin:0 0 14px;max-width:68ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-top:14px;box-shadow:var(--shadow)}
+.card h3{font-size:18.5px;margin-bottom:8px}
+.card.a{border-top:3px solid var(--a)} .card.s{border-top:3px solid var(--s)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid2>.card{margin-top:0}
+.grid2{margin-top:14px}
+.tag{display:inline-block;font:700 11.5px system-ui,sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:2px 9px;border-radius:99px;margin-bottom:8px}
+.tag.a{background:var(--a-soft);color:var(--a)} .tag.s{background:var(--s-soft);color:var(--s)} .tag.g{background:var(--accent-soft);color:var(--accent)}
+.note{background:var(--warn-soft);color:var(--ink);border-left:3px solid var(--warn);border-radius:0 10px 10px 0;padding:10px 14px;margin-top:12px;font-size:15px}
+.tip{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 14px;margin-top:12px;font-size:15px}
+.big{font:700 26px/1.15 "Iowan Old Style",Palatino,Georgia,serif;font-variant-numeric:tabular-nums}
+.sub{color:var(--muted);font-size:14px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:15px;margin-top:8px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:600}
+
+/* tables */
+.tw{overflow-x:auto;margin-top:8px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 12px system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+th.a-only,td.ca{color:var(--a)} th.s-only,td.cs{color:var(--s)}
+td.ca,td.cs{font-weight:550;min-width:150px}
+td.w{white-space:nowrap;font-weight:650}
+
+/* details */
+details{border:1px solid var(--line);border-radius:12px;margin-top:10px;background:var(--bg)}
+summary{cursor:pointer;padding:11px 14px;font-weight:650;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:20px;color:var(--muted);line-height:1}
+details[open] summary::after{content:"–"}
+summary span{font-weight:400;color:var(--muted);font-size:13.5px;margin-left:auto}
+details .tw{padding:0 6px 6px;margin:0}
+
+/* tracker */
+.checks{list-style:none;padding:0;margin:6px 0 0}
+.checks li{margin:0}
+.checks label{display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-radius:8px;cursor:pointer}
+.checks label:hover{background:var(--accent-soft)}
+.checks input{width:19px;height:19px;margin-top:3px;accent-color:var(--accent);flex:none}
+.checks input:checked+span{color:var(--muted);text-decoration:line-through}
+.glasses{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.glass{width:26px;height:34px;border:2px solid var(--s);border-radius:4px 4px 9px 9px;background:none;cursor:pointer;padding:0}
+.glass.full{background:var(--s)}
+.card.a .glass{border-color:var(--a)} .card.a .glass.full{background:var(--a)}
+.timeline{list-style:none;padding:0;margin:8px 0 0;border-left:2px solid var(--line)}
+.timeline li{position:relative;padding:2px 0 14px 18px;margin:0}
+.timeline li::before{content:"";position:absolute;left:-7px;top:9px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.timeline li.now::before{background:var(--accent)}
+.timeline b{display:block}
+.timeline .d{font-size:13px;color:var(--muted)}
+#nores{display:none;margin-top:24px;color:var(--muted)}
+.foot{margin-top:56px;font-size:13.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+
+@media (max-width:900px){
+  .side{transform:translateX(-100%);transition:transform .2s;box-shadow:0 0 40px rgba(0,0,0,.25);width:min(300px,86vw)}
+  body.open .side{transform:none}
+  .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:25}
+  body.open .scrim{display:block}
+  .main{margin-left:0;padding-block:72px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .topbar{display:flex;position:fixed;inset:0 0 auto 0;height:calc(56px + env(safe-area-inset-top,0px));align-items:center;gap:10px;padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));background:var(--surface);border-bottom:1px solid var(--line);z-index:20}
+  .topbar .menu{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;width:40px;height:38px;font-size:18px;cursor:pointer;flex:none}
+  .topbar .seg{flex:1;max-width:330px;margin-left:auto}
+  .topbar .seg button{padding:6px 6px;font-size:13px}
+  .grid2{grid-template-columns:1fr}
+  .hero{padding:20px}
+  .card{padding:16px}
+}
+@media print{.side,.topbar,.scrim{display:none}.main{margin:0;padding:0}.card,.hero{box-shadow:none;break-inside:avoid}details{break-inside:avoid}}
+</style>
+</head>
+<body data-who="both">
+
+<div class="topbar">
+  <button class="menu" id="menuBtn" aria-label="Open index">☰</button>
+  <div class="seg" role="group" aria-label="Show plan for">
+    <button data-who="both" aria-pressed="true">Both</button><button data-who="a" aria-pressed="false">Avisha</button><button data-who="s" aria-pressed="false">Shubham</button>
+  </div>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<aside class="side" id="side">
+  <div class="brand">Road to 5 Feb<small>Avisha &amp; Shubham · wedding plan</small></div>
+  <div class="seg" role="group" aria-label="Show plan for">
+    <button data-who="both" aria-pressed="true">Both</button><button data-who="a" aria-pressed="false">Avisha</button><button data-who="s" aria-pressed="false">Shubham</button>
+  </div>
+  <input class="search" id="q" type="search" placeholder="Search the plan… (roti, sunscreen)" aria-label="Search the plan">
+  <nav class="nav" id="nav">
+    <h4>Overview</h4>
+    <a href="#top">Countdown</a>
+    <a href="#tracker">Today's checklist</a>
+    <a href="#targets">Targets &amp; what to expect</a>
+    <a href="#roadmap">Roadmap to 5 Feb</a>
+    <a href="#week1">First-week to-do</a>
+    <h4>Food</h4>
+    <a href="#numbers">Daily numbers</a>
+    <a href="#dayplan">A day of eating + portions</a>
+    <a href="#breakfast">Easy breakfasts</a>
+    <a href="#menu">7-day lunch &amp; dinner</a>
+    <a href="#protein">Protein cheat-sheet</a>
+    <a href="#shopping">Shopping list</a>
+    <a href="#supplements">Supplements</a>
+    <h4>Training</h4>
+    <a href="#schedule">Weekly schedule</a>
+    <a href="#train-a" class="a-only">Avisha's workouts</a>
+    <a href="#train-s" class="s-only">Shubham's workouts</a>
+    <a href="#rules">How to progress</a>
+    <h4>Skin</h4>
+    <a href="#skin-a" class="a-only">Avisha's routine</a>
+    <a href="#skin-s" class="s-only">Shubham's routine</a>
+    <a href="#odisha" class="a-only">Odisha breakout kit</a>
+    <a href="#skin-time">Skin timeline to the wedding</a>
+    <h4>Hair</h4>
+    <a href="#hair-why" class="a-only">Why it falls + tests</a>
+    <a href="#hair-care" class="a-only">Hair routine</a>
+    <a href="#hair-food">Food for hair</a>
+    <h4>Daily habits</h4>
+    <a href="#water">Water</a>
+    <a href="#sleep">Sleep &amp; stress</a>
+    <h4>Finish line</h4>
+    <a href="#wedweek">Wedding week</a>
+  </nav>
+</aside>
+
+<main class="main"><div class="wrap">
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="kicker">Avisha &amp; Shubham</div>
+  <h1><span id="dleft" class="num">74</span> days to the wedding</h1>
+  <p>One plan for both of you: lift four days a week, eat home food with enough protein, protect your skin every morning, and sleep. Nothing here is extreme, which is why it will still be working in February.</p>
+  <div class="count">
+    <div class="stat"><b id="wleft">10</b><span>weeks left</span></div>
+    <div class="stat"><b id="sessions">42</b><span>gym sessions left</span></div>
+    <div class="stat"><b id="phase" style="font-size:21px;line-height:1.5">Foundation</b><span>current phase</span></div>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="barlab"><span>Tue 24 Nov · day 1</span><span>Fri 5 Feb · wedding</span></div>
+</header>
+
+<!-- ============ TRACKER ============ -->
+<section class="sec" id="tracker">
+  <h2>Today's checklist</h2>
+  <p class="lede">Tick as you go. It saves on this device and resets every morning. Tap a glass for each 250 ml of water.</p>
+  <div class="grid2">
+    <div class="card a a-only">
+      <span class="tag a">Avisha</span>
+      <ul class="checks">
+        <li><label><input type="checkbox" id="c-a1" data-k="a1"><span>Protein at breakfast, lunch and dinner</span></label></li>
+        <li><label><input type="checkbox" id="c-a2" data-k="a2"><span>Gym session, or 8,000 steps on rest days</span></label></li>
+        <li><label><input type="checkbox" id="c-a3" data-k="a3"><span>Sunscreen in the morning</span></label></li>
+        <li><label><input type="checkbox" id="c-a4" data-k="a4"><span>Night skin routine done</span></label></li>
+        <li><label><input type="checkbox" id="c-a5" data-k="a5"><span>Greens or amla / lemon with a meal (iron)</span></label></li>
+        <li><label><input type="checkbox" id="c-a6" data-k="a6"><span>In bed for 7–8 hours</span></label></li>
+      </ul>
+      <div class="sub" style="margin-top:8px">Water · 10 glasses = 2.5 L</div>
+      <div class="glasses" data-water="a" data-n="10"></div>
+    </div>
+    <div class="card s s-only">
+      <span class="tag s">Shubham</span>
+      <ul class="checks">
+        <li><label><input type="checkbox" id="c-s1" data-k="s1"><span>Protein at breakfast, lunch and dinner</span></label></li>
+        <li><label><input type="checkbox" id="c-s2" data-k="s2"><span>Whey after training (or with breakfast)</span></label></li>
+        <li><label><input type="checkbox" id="c-s3" data-k="s3"><span>Gym session, or 10,000 steps on rest days</span></label></li>
+        <li><label><input type="checkbox" id="c-s4" data-k="s4"><span>Face wash + moisturiser + sunscreen</span></label></li>
+        <li><label><input type="checkbox" id="c-s5" data-k="s5"><span>No second helping of rice / roti</span></label></li>
+        <li><label><input type="checkbox" id="c-s6" data-k="s6"><span>In bed for 7–8 hours</span></label></li>
+      </ul>
+      <div class="sub" style="margin-top:8px">Water · 14 glasses = 3.5 L</div>
+      <div class="glasses" data-water="s" data-n="14"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OVERVIEW ============ -->
+<div class="cat" id="cat-overview">Overview</div>
+
+<section class="sec" id="targets">
+  <h2>Targets &amp; what to expect</h2>
+  <p class="lede">Ten and a half weeks is enough for a visible change in both of you, if the target is the right one.</p>
+  <div class="grid2">
+    <div class="card a a-only">
+      <span class="tag a">Avisha · 50 kg · 5 ft</span>
+      <h3>Shape, not weight</h3>
+      <p>Your weight is already healthy for your height (BMI about 21.5), so <strong>you should not diet</strong>. Eating too little is one of the fastest ways to make hair fall worse.</p>
+      <p>The "feminine, toned" look comes from muscle in the glutes, legs, shoulders and upper back, which makes the waist look smaller by contrast. That means lifting weights and eating enough protein. You will not get bulky; at your size that would take years of trying.</p>
+      <dl class="kv">
+        <dt>Scale</dt><dd>stay 49–51 kg</dd>
+        <dt>Track instead</dt><dd>waist, hips, photos every 2 weeks</dd>
+        <dt>By 5 Feb</dt><dd>firmer legs and glutes, better posture, weights roughly doubled</dd>
+      </dl>
+    </div>
+    <div class="card s s-only">
+      <span class="tag s">Shubham · 81 kg · ~6 ft · 22% fat</span>
+      <h3>Lose fat slowly, gain muscle</h3>
+      <p>As a beginner you can do both at once. A small calorie deficit with high protein and heavy lifting takes fat off while the muscle grows underneath.</p>
+      <dl class="kv">
+        <dt>Pace</dt><dd>0.3–0.5 kg down per week</dd>
+        <dt>By 5 Feb</dt><dd>about 77–78 kg, around 18–19% fat</dd>
+        <dt>Track</dt><dd>morning weight 3× a week (use the average), waist at the navel</dd>
+        <dt>Looks like</dt><dd>wider shoulders, flatter stomach, better-fitting sherwani</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Honest timelines for skin and hair</h3>
+    <ul>
+      <li><strong>Skin:</strong> glow and smoother texture show in 3–4 weeks; evening out tan and marks takes 8–12 weeks. Starting now is exactly on time.</li>
+      <li><strong>Hair fall:</strong> hair responds slowly. Shedding usually eases 6–10 weeks after the cause is fixed, so the tests in week 1 matter more than any oil.</li>
+      <li><strong>Hair growth:</strong> about 1 cm a month, so roughly 2.5 cm by the wedding. What you can change by February is shine, less breakage and less shedding.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="roadmap">
+  <h2>Roadmap to 5 Feb</h2>
+  <div class="card">
+    <ul class="timeline" id="tl">
+      <li data-from="2026-11-24" data-to="2026-12-06"><b>Foundation</b><span class="d">Tue 24 Nov – Sun 6 Dec · 2 weeks</span>
+        Learn every exercise with light weights. Get the kitchen routine going. Blood tests. Start the basic skin routine (cleanser, moisturiser, sunscreen only).</li>
+      <li data-from="2026-12-07" data-to="2027-01-17"><b>Build</b><span class="d">Mon 7 Dec – Sun 17 Jan · 6 weeks</span>
+        The real work. Add weight or reps every week. Add skin actives one at a time. This is where most of the visible change happens.</li>
+      <li data-from="2027-01-18" data-to="2027-01-31"><b>Sharpen</b><span class="d">Mon 18 Jan – Sun 31 Jan · 2 weeks</span>
+        Keep training hard, tighten up sweets and fried food. No new skin or hair products from here. Outfit fittings, facial trial, haircut and trim.</li>
+      <li data-from="2027-02-01" data-to="2027-02-05"><b>Wedding week</b><span class="d">Mon 1 Feb – Fri 5 Feb</span>
+        Two light sessions, lots of sleep and water, familiar food only. Nothing new on your face.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="week1">
+  <h2>First-week to-do</h2>
+  <div class="card">
+    <ul class="checks">
+      <li><label><input type="checkbox" id="c-w1" data-p="w1"><span><strong>Blood test for both:</strong> CBC, ferritin, vitamin B12, vitamin D (25-OH), TSH. Any lab does this as a package. For Avisha this is the most important hair step in the whole plan.</span></label></li>
+      <li><label><input type="checkbox" id="c-w2" data-p="w2"><span><strong>"Before" photos and measurements:</strong> front, side, back in the same light. Waist at the navel, hips at the widest point. Shubham: morning weight.</span></label></li>
+      <li><label><input type="checkbox" id="c-w3" data-p="w3"><span><strong>Ask a trainer to check your form</strong> once on squat, Romanian deadlift, hip thrust, bench press and rows.</span></label></li>
+      <li><label><input type="checkbox" id="c-w4" data-p="w4"><span><strong>Buy the few new things</strong> in the <a href="#shopping">shopping list</a>: whey, soya chunks, seeds, sunscreen, a small kitchen scale.</span></label></li>
+      <li><label><input type="checkbox" id="c-w5" data-p="w5"><span><strong>Pick one katori</strong> (about 150 ml) and use it for every portion on this page.</span></label></li>
+      <li><label><input type="checkbox" id="c-w6" data-p="w6"><span><strong>Fix the gym time</strong> and put the four days in both your calendars.</span></label></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ FOOD ============ -->
+<div class="cat" id="cat-food">Food</div>
+
+<section class="sec" id="numbers">
+  <h2>Daily numbers</h2>
+  <p class="lede">Same food for both of you, different portions. Protein is the number that matters most, and it is the one vegetarian home food usually misses.</p>
+  <div class="grid2">
+    <div class="card a a-only">
+      <span class="tag a">Avisha</span>
+      <div class="big">~1,650–1,700 kcal</div><div class="sub">roughly maintenance, so the muscle has something to grow from</div>
+      <div class="big" style="margin-top:10px">75–85 g protein</div><div class="sub">about 1.6 g per kg</div>
+      <dl class="kv"><dt>Oil + ghee</dt><dd>3 tsp a day in total</dd><dt>Sweets</dt><dd>2 small servings a week</dd></dl>
+    </div>
+    <div class="card s s-only">
+      <span class="tag s">Shubham</span>
+      <div class="big">~2,200–2,300 kcal</div><div class="sub">about 350 below what he burns</div>
+      <div class="big" style="margin-top:10px">125–140 g protein</div><div class="sub">about 1.6–1.7 g per kg</div>
+      <dl class="kv"><dt>Oil + ghee</dt><dd>4 tsp a day in total</dd><dt>Sweets</dt><dd>2 small servings a week</dd></dl>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Adjust by results, not by the calculator</h3>
+    <p>These are starting estimates (age and daily activity shift them). Check after two full weeks:</p>
+    <ul>
+      <li class="s-only"><strong>Shubham</strong> losing less than 0.3 kg a week: remove one roti a day or the bedtime milk. Losing more than 0.7 kg a week: add a roti back, because faster loss costs muscle.</li>
+      <li class="a-only"><strong>Avisha</strong> dropping below 49 kg: add a roti at lunch or a banana. Weight creeping past 51.5 kg with a growing waist: trim oil and sweets first, never protein.</li>
+    </ul>
+    <div class="tip"><strong>The plate rule for every cooked meal:</strong> half the plate vegetables and salad, a quarter protein (dal, paneer, soya, chana), a quarter roti or rice. Measure oil with a spoon instead of pouring.</div>
+  </div>
+</section>
+
+<section class="sec" id="dayplan">
+  <h2>A day of eating + portions</h2>
+  <p class="lede">Two cooking sessions, lunch and dinner. Everything else is assembled, not cooked. 1 katori = 150 ml. 1 roti = a medium phulka with no ghee, or ½ tsp at most.</p>
+  <div class="card">
+    <div class="tw"><table>
+      <thead><tr><th>When</th><th>What</th><th class="a-only">Avisha</th><th class="s-only">Shubham</th></tr></thead>
+      <tbody>
+      <tr><td class="w">On waking</td><td>Water, soaked nuts</td>
+        <td class="ca a-only">2 glasses water · 5 almonds + 1 walnut</td>
+        <td class="cs s-only">2 glasses water · 8 almonds + 2 walnuts</td></tr>
+      <tr><td class="w">Breakfast</td><td>One of the <a href="#breakfast">easy breakfasts</a></td>
+        <td class="ca a-only">~350 kcal · 18–20 g protein</td>
+        <td class="cs s-only">~500 kcal · 30–35 g protein</td></tr>
+      <tr><td class="w">Lunch<br><span class="sub">cook 1</span></td><td>Dal or legume, sabzi, roti or rice, curd, raw salad with lemon</td>
+        <td class="ca a-only">2 roti <em>or</em> 1 katori rice · 1 katori thick dal · 1 katori sabzi · 1 katori curd · salad</td>
+        <td class="cs s-only">3 roti <em>or</em> 2 roti + ½ katori rice · 1½ katori thick dal · 1 katori sabzi · 1 katori curd · salad</td></tr>
+      <tr><td class="w">Before gym<br><span class="sub">60–90 min</span></td><td>Fruit + roasted chana (or a sattu drink)</td>
+        <td class="ca a-only">1 fruit · 30 g chana (one fistful)</td>
+        <td class="cs s-only">1 banana · 40 g chana (a big fistful)</td></tr>
+      <tr><td class="w">After gym</td><td>Fast protein</td>
+        <td class="ca a-only">1 glass milk (250 ml), or ½ scoop whey in water</td>
+        <td class="cs s-only">1 scoop whey in water</td></tr>
+      <tr><td class="w">Dinner<br><span class="sub">cook 2</span></td><td>A protein main, sabzi, roti, salad. Lighter on grain than lunch.</td>
+        <td class="ca a-only">1 roti · 80 g paneer <em>or</em> 25 g dry soya chunks <em>or</em> 1 katori chana / rajma · 1 katori sabzi · salad</td>
+        <td class="cs s-only">2 roti · 120 g paneer <em>or</em> 45 g dry soya chunks <em>or</em> 1½ katori chana / rajma · 1 katori sabzi · salad</td></tr>
+      <tr><td class="w">Before bed</td><td>Optional</td>
+        <td class="ca a-only">½ glass haldi milk if hungry</td>
+        <td class="cs s-only">1 glass toned milk (200 ml)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip"><strong>Gym in the morning instead?</strong> Have a banana before, train, then breakfast becomes the after-gym meal (Shubham adds the whey to it). The evening snack stays as fruit + chana.</div>
+    <div class="note"><strong>Tea and coffee:</strong> two cups a day at most, and not within an hour of lunch or dinner. Tea blocks iron absorption, which matters for Avisha's hair.</div>
+  </div>
+</section>
+
+<section class="sec" id="breakfast">
+  <h2>Easy breakfasts</h2>
+  <p class="lede">Ten minutes or less. Rotate through them; the first three need no cooking at all.</p>
+  <div class="card">
+    <div class="tw"><table>
+      <thead><tr><th>Breakfast</th><th>How</th><th class="a-only">Avisha</th><th class="s-only">Shubham</th></tr></thead>
+      <tbody>
+      <tr><td class="w">Overnight oats</td><td>Oats, milk, a spoon of curd, 1 tbsp chia, fruit. Mix at night, eat cold.</td>
+        <td class="ca a-only">40 g oats · 200 ml milk · ½ banana · 1 tbsp peanuts</td>
+        <td class="cs s-only">60 g oats · 250 ml milk · 1 banana · 1 scoop whey stirred in</td></tr>
+      <tr><td class="w">Sattu sharbat + fruit</td><td>Sattu in cold water with lemon, roasted jeera, black salt. Fruit and peanuts on the side.</td>
+        <td class="ca a-only">40 g sattu (3 tbsp) · 1 fruit · 25 g peanuts</td>
+        <td class="cs s-only">60 g sattu (4–5 tbsp) · 1 fruit · 30 g peanuts · 1 glass milk</td></tr>
+      <tr><td class="w">Sprouts chaat + curd</td><td>Moong sprouts (steam 3 minutes if raw upsets the stomach), onion, tomato, lemon, chaat masala.</td>
+        <td class="ca a-only">1 katori sprouts · 1 katori curd</td>
+        <td class="cs s-only">1½ katori sprouts · 1 katori curd · 50 g paneer cubes</td></tr>
+      <tr><td class="w">Besan chilla</td><td>Besan, water, onion, chilli, ajwain. Batter takes 2 minutes, 3 minutes per chilla.</td>
+        <td class="ca a-only">2 chilla (50 g besan) · 1 katori curd</td>
+        <td class="cs s-only">3 chilla (80 g besan) stuffed with 50 g paneer · 1 katori curd</td></tr>
+      <tr><td class="w">Paneer toast</td><td>Crumbled paneer with onion, tomato, haldi, 1 tsp oil, on wholewheat toast.</td>
+        <td class="ca a-only">2 slices · 70 g paneer</td>
+        <td class="cs s-only">3 slices · 120 g paneer</td></tr>
+      <tr><td class="w">Poha or upma</td><td>With peanuts and peas. Low in protein alone, so always pair it.</td>
+        <td class="ca a-only">1 katori · 1 glass milk</td>
+        <td class="cs s-only">1½ katori · 1 scoop whey in milk</td></tr>
+      <tr><td class="w">Sunday: chakuli + ghugni</td><td>Or idli-sambar, or moong dal chilla. Ghugni from Saturday's batch.</td>
+        <td class="ca a-only">2 chakuli · 1 katori ghugni</td>
+        <td class="cs s-only">3 chakuli · 1½ katori ghugni</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section class="sec" id="menu">
+  <h2>7-day lunch &amp; dinner</h2>
+  <p class="lede">A repeating week built on things you already cook. Portions follow the <a href="#dayplan">day plan</a>; swap days freely as long as dinner keeps its protein main.</p>
+  <div class="card">
+    <div class="tw"><table>
+      <thead><tr><th>Day</th><th>Lunch</th><th>Dinner</th></tr></thead>
+      <tbody>
+      <tr><td class="w">Mon</td><td>Dalma (dal with pumpkin, raw banana, brinjal) · rice or roti · saga bhaja · curd</td><td>Paneer bhurji with capsicum · roti · cucumber-onion salad</td></tr>
+      <tr><td class="w">Tue</td><td>Rajma · rice · kachumber · curd</td><td>Soya chunk curry · roti · beans-carrot stir fry</td></tr>
+      <tr><td class="w">Wed</td><td>Moong dal · lauki or tori sabzi · roti · curd</td><td>Palak paneer (or palak tofu) · roti · salad</td></tr>
+      <tr><td class="w">Thu</td><td>Kala chana curry · roti · cucumber raita</td><td>Soya keema with peas · roti · sautéed cabbage</td></tr>
+      <tr><td class="w">Fri</td><td>Masoor dal · gobi-matar (go light on aloo) · roti · curd</td><td>Tawa paneer with onion and capsicum · roti · mint chutney · salad</td></tr>
+      <tr><td class="w">Sat</td><td>Ghugni · roti or rice · salad · chaas (make extra for Sunday breakfast)</td><td>Santula (light mixed veg) · besan kadhi · 1 roti or ½ katori rice · paneer cubes on the side</td></tr>
+      <tr><td class="w">Sun</td><td><strong>Free meal.</strong> Favourite home food or eating out. Keep a dal or paneer dish in it; one sweet is fine.</td><td>Moong dal khichdi with vegetables · curd · roasted papad. Shubham adds 100 g paneer.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <h3>Kitchen shortcuts</h3>
+    <ul>
+      <li><strong>Soak at night:</strong> rajma, chana or dried peas for tomorrow, plus the almonds. Start a batch of moong sprouts twice a week.</li>
+      <li><strong>Cook dal and legumes double.</strong> Half goes in the fridge and becomes tomorrow's side or the breakfast ghugni.</li>
+      <li><strong>Paneer at home</strong> from toned milk is leaner than shop paneer. Keep the whey water for kneading atta or cooking dal.</li>
+      <li><strong>Soya chunks:</strong> boil 5 minutes, squeeze out the water well, then cook. That removes the smell people dislike. Three or four times a week is plenty.</li>
+      <li><strong>Greens four times a week</strong> (saga, palak, sajana saga) with a squeeze of lemon. The vitamin C helps your body take up the iron.</li>
+      <li><strong>Eating out or at a function:</strong> fill up on dal, paneer, tandoori items and salad first; one roti or a little rice; skip the fried starters and sugary drinks.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="protein">
+  <h2>Protein cheat-sheet</h2>
+  <p class="lede">Use this to swap foods without losing protein. A kitchen scale for the first two weeks trains your eye quickly.</p>
+  <div class="card">
+    <div class="tw"><table>
+      <thead><tr><th>Food</th><th>Amount</th><th>Protein</th></tr></thead>
+      <tbody>
+      <tr><td>Whey protein</td><td>1 scoop (30 g)</td><td class="num">~24 g</td></tr>
+      <tr><td>Paneer</td><td>100 g (a palm-sized slab)</td><td class="num">~18 g</td></tr>
+      <tr><td>Soya chunks</td><td>30 g dry (a small katori)</td><td class="num">~15 g</td></tr>
+      <tr><td>Tofu, firm</td><td>100 g</td><td class="num">~13 g</td></tr>
+      <tr><td>Chana / rajma, cooked</td><td>1 katori</td><td class="num">~11 g</td></tr>
+      <tr><td>Hung curd</td><td>100 g</td><td class="num">~9 g</td></tr>
+      <tr><td>Milk</td><td>1 glass (250 ml)</td><td class="num">~8 g</td></tr>
+      <tr><td>Sattu</td><td>40 g (3 tbsp)</td><td class="num">~8 g</td></tr>
+      <tr><td>Thick dal, cooked</td><td>1 katori</td><td class="num">~7 g</td></tr>
+      <tr><td>Peanuts</td><td>30 g (a fistful)</td><td class="num">~7 g</td></tr>
+      <tr><td>Roasted chana</td><td>30 g (a fistful)</td><td class="num">~6 g</td></tr>
+      <tr><td>Curd</td><td>1 katori</td><td class="num">~5 g</td></tr>
+      <tr><td>Roti</td><td>1 medium</td><td class="num">~3 g</td></tr>
+      </tbody>
+    </table></div>
+    <p class="sub">If you eat eggs, 2 whole eggs (~12 g) can replace the paneer in any breakfast.</p>
+  </div>
+</section>
+
+<section class="sec" id="shopping">
+  <h2>Shopping list</h2>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag g">Already in your kitchen</span>
+      <ul>
+        <li>Dals: moong, masoor, toor; besan</li>
+        <li>Rajma, kala chana, kabuli chana, dried peas</li>
+        <li>Atta, rice, poha, suji, oats</li>
+        <li>Milk (toned), curd, paneer</li>
+        <li>Seasonal vegetables, saga and palak, lemons, amla</li>
+        <li>Fruit: banana, guava, orange, papaya, apple</li>
+        <li>Peanuts, almonds, walnuts, til</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag g">New, and worth it</span>
+      <ul>
+        <li><strong>Whey protein</strong> (1 kg, unflavoured or one flavour). Buy from the brand's own site; fakes are common in marketplaces.</li>
+        <li><strong>Soya chunks and soya granules</strong></li>
+        <li><strong>Sattu</strong> and <strong>roasted chana</strong></li>
+        <li><strong>Chia or flax seeds</strong> (plant omega-3 for skin and hair)</li>
+        <li><strong>Kitchen scale</strong> and a measuring spoon for oil</li>
+        <li>Skin: gentle face wash, moisturiser, <strong>SPF 50 PA++++ sunscreen</strong>, niacinamide serum (details in <a href="#skin-a">Skin</a>)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="supplements">
+  <h2>Supplements</h2>
+  <p class="lede">Food does most of the work. These fill the gaps a vegetarian diet tends to have.</p>
+  <div class="card">
+    <div class="tw"><table>
+      <thead><tr><th>What</th><th>Who</th><th>How</th></tr></thead>
+      <tbody>
+      <tr><td class="w">Whey protein</td><td>Shubham daily. Avisha when a day falls short.</td><td>1 scoop after training. It is milk protein, the same thing that is in paneer.</td></tr>
+      <tr><td class="w">Vitamin B12</td><td>Both, very likely</td><td>Plant foods have almost none. Check the blood test; if low, take what the doctor prescribes.</td></tr>
+      <tr><td class="w">Vitamin D</td><td>Per blood test</td><td>Deficiency is very common in India. Dose depends on the result, so let the doctor set it.</td></tr>
+      <tr><td class="w">Iron</td><td>Avisha, only if ferritin is low</td><td>Do not self-prescribe; excess iron is harmful. If prescribed, take it with lemon water, away from tea and milk.</td></tr>
+      <tr><td class="w">Creatine monohydrate</td><td>Shubham, optional</td><td>3 g a day, any time, with plenty of water. The best-studied muscle supplement, and vegetarians get none from food. Skip it if there is any kidney condition.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><strong>Skip these:</strong> fat burners, detox teas, hair gummies and high-dose biotin (it only helps a true deficiency and can distort thyroid test results), and collagen powders (weak evidence, and most are made from fish or cattle).</div>
+  </div>
+</section>
+
+<!-- ============ TRAINING ============ -->
+<div class="cat" id="cat-training">Training</div>
+
+<section class="sec" id="schedule">
+  <h2>Weekly schedule</h2>
+  <p class="lede">You go together on the same four days and each follow your own sheet. Sessions take 50–70 minutes.</p>
+  <div class="card">
+    <div class="tw"><table>
+      <thead><tr><th>Day</th><th>Session</th><th class="a-only">Avisha</th><th class="s-only">Shubham</th></tr></thead>
+      <tbody>
+      <tr><td class="w">Mon</td><td>Lower A</td><td class="ca a-only">Glutes focus</td><td class="cs s-only">Squat focus</td></tr>
+      <tr><td class="w">Tue</td><td>Upper A</td><td class="ca a-only">Back and shoulders</td><td class="cs s-only">Chest and back</td></tr>
+      <tr><td class="w">Wed</td><td>Active rest</td><td class="ca a-only">8,000 steps · 10 min stretching</td><td class="cs s-only">10,000 steps · 10 min stretching</td></tr>
+      <tr><td class="w">Thu</td><td>Lower B</td><td class="ca a-only">Legs and glutes</td><td class="cs s-only">Deadlift focus</td></tr>
+      <tr><td class="w">Fri</td><td>Upper B</td><td class="ca a-only">Posture and arms</td><td class="cs s-only">Shoulders and arms</td></tr>
+      <tr><td class="w">Sat</td><td>Optional</td><td class="ca a-only">Yoga, dance or a long walk, 30–40 min</td><td class="cs s-only">Incline treadmill walk 30 min + abs</td></tr>
+      <tr><td class="w">Sun</td><td>Rest</td><td class="ca a-only">Easy walk</td><td class="cs s-only">Easy walk</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip"><strong>Tomorrow is Tuesday 24 Nov,</strong> so start with Upper A. For the first two weeks use weights that feel almost too easy and stop every set with 3–4 reps still in you. The goal is clean movement, not soreness.</div>
+  </div>
+</section>
+
+<section class="sec a-only" id="train-a">
+  <h2>Avisha's workouts</h2>
+  <p class="lede">Built around glutes, legs, shoulders and upper back. Rest 60–90 seconds between sets. Warm up with 5 minutes of brisk walking and one light set of the first exercise.</p>
+  <div class="card a">
+    <details open><summary>Mon · Lower A · glutes <span>6 moves</span></summary><div class="tw"><table>
+      <thead><tr><th>Exercise</th><th>Sets × reps</th><th>Cue</th></tr></thead><tbody>
+      <tr><td>Hip thrust (barbell, Smith or machine)</td><td class="w">3 × 10–12</td><td>Chin tucked, pause one second at the top</td></tr>
+      <tr><td>Goblet squat</td><td class="w">3 × 10–12</td><td>Dumbbell at the chest, sit between the heels</td></tr>
+      <tr><td>Dumbbell Romanian deadlift</td><td class="w">3 × 10–12</td><td>Push hips back, flat back, feel the hamstrings stretch</td></tr>
+      <tr><td>Cable glute kickback</td><td class="w">2 × 12–15 each</td><td>Small controlled range, no swinging</td></tr>
+      <tr><td>Hip abduction machine</td><td class="w">2 × 15–20</td><td>Lean slightly forward</td></tr>
+      <tr><td>Plank</td><td class="w">3 × 30–45 s</td><td>Squeeze glutes, ribs down</td></tr>
+    </tbody></table></div></details>
+    <details><summary>Tue · Upper A · back and shoulders <span>7 moves</span></summary><div class="tw"><table>
+      <thead><tr><th>Exercise</th><th>Sets × reps</th><th>Cue</th></tr></thead><tbody>
+      <tr><td>Lat pulldown</td><td class="w">3 × 10–12</td><td>Pull elbows to your back pockets</td></tr>
+      <tr><td>Seated dumbbell shoulder press</td><td class="w">3 × 10–12</td><td>Don't arch the lower back</td></tr>
+      <tr><td>Seated cable row</td><td class="w">3 × 10–12</td><td>Chest tall, squeeze shoulder blades</td></tr>
+      <tr><td>Machine chest press or incline push-up</td><td class="w">2 × 10–12</td><td>Slow on the way down</td></tr>
+      <tr><td>Dumbbell lateral raise</td><td class="w">3 × 12–15</td><td>Light weight, lead with the elbows</td></tr>
+      <tr><td>Triceps rope pushdown</td><td class="w">2 × 12–15</td><td>Elbows pinned to the sides</td></tr>
+      <tr><td>Dead bug</td><td class="w">3 × 10 each</td><td>Lower back stays on the floor</td></tr>
+    </tbody></table></div></details>
+    <details><summary>Thu · Lower B · legs and glutes <span>7 moves</span></summary><div class="tw"><table>
+      <thead><tr><th>Exercise</th><th>Sets × reps</th><th>Cue</th></tr></thead><tbody>
+      <tr><td>Leg press, feet high and wide</td><td class="w">3 × 10–12</td><td>Deep, but lower back stays on the pad</td></tr>
+      <tr><td>Reverse lunge (later: Bulgarian split squat)</td><td class="w">3 × 10 each</td><td>Long step, lean slightly forward</td></tr>
+      <tr><td>Glute bridge, moving to single-leg</td><td class="w">3 × 12–15</td><td>Drive through the heels</td></tr>
+      <tr><td>Leg curl</td><td class="w">3 × 12–15</td><td>Three seconds on the way back</td></tr>
+      <tr><td>Hip abduction machine</td><td class="w">2 × 15–20</td><td></td></tr>
+      <tr><td>Calf raise</td><td class="w">2 × 15</td><td>Full stretch at the bottom</td></tr>
+      <tr><td>Side plank</td><td class="w">2 × 30 s each</td><td></td></tr>
+    </tbody></table></div></details>
+    <details><summary>Fri · Upper B · posture and arms <span>7 moves</span></summary><div class="tw"><table>
+      <thead><tr><th>Exercise</th><th>Sets × reps</th><th>Cue</th></tr></thead><tbody>
+      <tr><td>Assisted pull-up or close-grip pulldown</td><td class="w">3 × 8–12</td><td>Reduce the assistance over the weeks</td></tr>
+      <tr><td>Incline dumbbell press</td><td class="w">3 × 10–12</td><td>Bench at about 30°</td></tr>
+      <tr><td>One-arm dumbbell row</td><td class="w">3 × 10–12 each</td><td>Pull to the hip, not the shoulder</td></tr>
+      <tr><td>Face pull</td><td class="w">3 × 12–15</td><td>The best posture exercise for blouse and lehenga backs</td></tr>
+      <tr><td>Dumbbell lateral raise</td><td class="w">3 × 12–15</td><td></td></tr>
+      <tr><td>Dumbbell curl</td><td class="w">2 × 12–15</td><td></td></tr>
+      <tr><td>Pallof press or cable crunch</td><td class="w">3 × 12</td><td></td></tr>
+    </tbody></table></div></details>
+    <p class="sub" style="margin-top:10px">During your period, train as you feel. A lighter session or a walk still counts.</p>
+  </div>
+</section>
+
+<section class="sec s-only" id="train-s">
+  <h2>Shubham's workouts</h2>
+  <p class="lede">Heavy basics first, then shoulder and arm work for the look. Rest 2 minutes on the first two lifts, 60–90 seconds on the rest. Warm up with 5 minutes of walking and two lighter sets of the first lift.</p>
+  <div class="card s">
+    <details open><summary>Mon · Lower A · squat <span>6 moves</span></summary><div class="tw"><table>
+      <thead><tr><th>Exercise</th><th>Sets × reps</th><th>Cue</th></tr></thead><tbody>
+      <tr><td>Back squat (goblet squat in weeks 1–2)</td><td class="w">3 × 6–10</td><td>Thighs to parallel, knees track the toes</td></tr>
+      <tr><td>Romanian deadlift</td><td class="w">3 × 8–10</td><td>Hips back, bar close to the legs</td></tr>
+      <tr><td>Leg press</td><td class="w">3 × 10–12</td><td></td></tr>
+      <tr><td>Leg curl</td><td class="w">3 × 10–15</td><td></td></tr>
+      <tr><td>Standing calf raise</td><td class="w">3 × 12–15</td><td>Pause at the top</td></tr>
+      <tr><td>Hanging knee raise</td><td class="w">3 × 10–15</td><td>No swinging</td></tr>
+    </tbody></table></div></details>
+    <details><summary>Tue · Upper A · chest and back <span>6 moves</span></summary><div class="tw"><table>
+      <thead><tr><th>Exercise</th><th>Sets × reps</th><th>Cue</th></tr></thead><tbody>
+      <tr><td>Bench press (bar or dumbbells)</td><td class="w">3 × 6–10</td><td>Shoulder blades pinched, feet planted</td></tr>
+      <tr><td>Lat pulldown, moving to pull-ups</td><td class="w">3 × 8–12</td><td>Full stretch at the top</td></tr>
+      <tr><td>Seated dumbbell overhead press</td><td class="w">3 × 8–12</td><td></td></tr>
+      <tr><td>Seated cable row</td><td class="w">3 × 10–12</td><td></td></tr>
+      <tr><td>Dumbbell lateral raise</td><td class="w">3 × 12–15</td><td>This is what widens the shoulders</td></tr>
+      <tr><td>Triceps pushdown</td><td class="w">3 × 10–15</td><td></td></tr>
+    </tbody></table></div></details>
+    <details><summary>Thu · Lower B · deadlift <span>6 moves</span></summary><div class="tw"><table>
+      <thead><tr><th>Exercise</th><th>Sets × reps</th><th>Cue</th></tr></thead><tbody>
+      <tr><td>Deadlift (back extension in weeks 1–2)</td><td class="w">3 × 5–8</td><td>Get form checked first; flat back, every rep from a dead stop</td></tr>
+      <tr><td>Bulgarian split squat</td><td class="w">3 × 8–10 each</td><td></td></tr>
+      <tr><td>Leg extension</td><td class="w">3 × 12–15</td><td></td></tr>
+      <tr><td>Leg curl</td><td class="w">3 × 10–15</td><td></td></tr>
+      <tr><td>Seated calf raise</td><td class="w">3 × 12–15</td><td></td></tr>
+      <tr><td>Plank</td><td class="w">3 × 45–60 s</td><td></td></tr>
+    </tbody></table></div></details>
+    <details><summary>Fri · Upper B · shoulders and arms <span>7 moves</span></summary><div class="tw"><table>
+      <thead><tr><th>Exercise</th><th>Sets × reps</th><th>Cue</th></tr></thead><tbody>
+      <tr><td>Incline dumbbell press</td><td class="w">3 × 8–12</td><td>Builds the upper chest</td></tr>
+      <tr><td>Chest-supported or one-arm row</td><td class="w">3 × 8–12</td><td></td></tr>
+      <tr><td>Cable or machine fly</td><td class="w">2 × 12–15</td><td></td></tr>
+      <tr><td>Face pull</td><td class="w">3 × 12–15</td><td>Fixes desk posture</td></tr>
+      <tr><td>Dumbbell lateral raise</td><td class="w">3 × 12–15</td><td></td></tr>
+      <tr><td>Barbell or dumbbell curl</td><td class="w">3 × 10–12</td><td rowspan="2">Do these two back to back</td></tr>
+      <tr><td>Overhead triceps extension</td><td class="w">3 × 10–12</td></tr>
+    </tbody></table></div></details>
+    <p class="sub" style="margin-top:10px">Cardio: 10,000 steps every day, plus 20–25 minutes of incline walking after two of the sessions from week 3. Walking burns fat without eating into recovery.</p>
+  </div>
+</section>
+
+<section class="sec" id="rules">
+  <h2>How to progress</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Write it down.</strong> Note the weight and reps for every set in your phone. Next session, try to beat it by one rep.</li>
+      <li><strong>When every set hits the top of the rep range</strong> with clean form, add the smallest weight available next time and start again from the bottom of the range.</li>
+      <li><strong>Stop each set with 1–2 good reps left</strong> (after the first two weeks). Grinding to failure adds soreness, not results.</li>
+      <li><strong>Soreness in the first two weeks is normal</strong> and fades. Sharp or joint pain is not: stop that exercise and swap it.</li>
+      <li><strong>Missed a day?</strong> Do it on Wednesday or Saturday. Missed a week? Just restart; don't try to make it up.</li>
+      <li><strong>Machine taken?</strong> Any exercise for the same muscle works. Consistency beats the perfect plan.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SKIN ============ -->
+<div class="cat" id="cat-skin">Skin</div>
+
+<section class="sec a-only" id="skin-a">
+  <h2>Avisha's skin routine</h2>
+  <p class="lede">"Brighter" realistically means even tone, less tan, fewer marks and a healthy glow. Sunscreen does more for that than every serum combined.</p>
+  <div class="grid2">
+    <div class="card a">
+      <span class="tag a">Morning · 3 minutes</span>
+      <ol>
+        <li><strong>Gentle face wash</strong> (non-foaming or low-foam)</li>
+        <li><strong>Vitamin C serum 10%</strong>, from week 3</li>
+        <li><strong>Light moisturiser</strong> (gel type if skin is oily)</li>
+        <li><strong>Sunscreen SPF 50, PA++++</strong>: two finger-lengths for face and neck, every day, indoors too. Reapply if you are out past noon.</li>
+      </ol>
+    </div>
+    <div class="card a">
+      <span class="tag a">Night · 3 minutes</span>
+      <ol>
+        <li><strong>Face wash</strong>, massaged for a full minute to lift the sunscreen</li>
+        <li><strong>Niacinamide serum 5–10%</strong>, from week 2 (tone, oil control, marks)</li>
+        <li><strong>Moisturiser</strong></li>
+        <li><strong>Two nights a week</strong> (say Wed and Sun), from week 4: <strong>salicylic acid 2%</strong> instead of niacinamide, to keep pores clear</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Rules that prevent most disasters</h3>
+    <ul>
+      <li><strong>One new product at a time</strong>, two weeks apart, patch-tested behind the ear for two days first. If something stings or breaks you out, you will know which one.</li>
+      <li><strong>Nothing new after 10 January.</strong> The last four weeks are for skin that is calm and predictable.</li>
+      <li><strong>Body:</strong> moisturise right after bathing, scrub or ubtan (besan, curd, a pinch of haldi) once a week, sunscreen on arms and neck when outdoors, lip balm at night.</li>
+      <li><strong>Don't pick.</strong> A picked pimple leaves a dark mark that lasts months. Use a pimple patch.</li>
+      <li><strong>Change pillowcases twice a week</strong> and keep hair oil off your face at night.</li>
+    </ul>
+    <div class="note"><strong>Avoid:</strong> "fairness" or "instant glow" creams sold over the counter or mixed by a parlour (many contain steroids that thin the skin and cause rebound acne), lemon juice or baking soda on the face, and glutathione drips. If you are planning a pregnancy soon after the wedding, also avoid retinol and retinoids.</div>
+  </div>
+</section>
+
+<section class="sec s-only" id="skin-s">
+  <h2>Shubham's skin routine</h2>
+  <div class="card s">
+    <span class="tag s">Three steps, twice a day</span>
+    <ol>
+      <li><strong>Face wash</strong> morning and night, and after the gym. If the skin is oily, use one with salicylic acid.</li>
+      <li><strong>Moisturiser</strong>, a light gel is enough.</li>
+      <li><strong>Sunscreen SPF 50</strong> in the morning. It is the difference between a tanned, tired face and a clear one in the photos.</li>
+    </ol>
+    <p>Also: shower soon after training to avoid back and chest acne, wash gym clothes after each use, and use a clean towel on the face. Sharing Avisha's niacinamide serum at night is fine.</p>
+  </div>
+</section>
+
+<section class="sec a-only" id="odisha">
+  <h2>Odisha breakout kit</h2>
+  <p class="lede">Breakouts on trips home usually have several small causes stacking up at once. Handle each and the trip stays clear.</p>
+  <div class="card a">
+    <div class="tw"><table>
+      <thead><tr><th>Likely cause</th><th>What to do</th></tr></thead>
+      <tbody>
+      <tr><td class="w">Humidity and sweat</td><td>Switch to a gel moisturiser and a light, non-greasy sunscreen there. Rinse your face after sweating instead of letting it dry on the skin.</td></tr>
+      <tr><td class="w">Routine left behind</td><td>Carry your own face wash, moisturiser, sunscreen and salicylic acid in travel bottles. Don't borrow products at home.</td></tr>
+      <tr><td class="w">Different water</td><td>If the tap water feels hard or leaves a film, do the final face rinse with filtered water. Cheap to try, and it helps some people a lot.</td></tr>
+      <tr><td class="w">Sweets and fried food</td><td>Home means rasagola, chhena poda and bara every day. Sugar spikes push oil production. Choose one treat a day and enjoy it properly.</td></tr>
+      <tr><td class="w">Sleep and travel stress</td><td>Late nights with family show on the skin by day three. Protect 7 hours.</td></tr>
+      <tr><td class="w">Pillowcases, towels, hair oil</td><td>Take your own pillowcase and face towel. Oil the scalp, not the hairline, and wash it out before sleeping on it.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip"><strong>Trip protocol:</strong> use the salicylic acid on three nights before you travel and on alternate nights while there. Keep a tube of benzoyl peroxide 2.5% for a single spot (dab at night, it bleaches fabric) and a strip of pimple patches. If the wedding is in Odisha, arrive with this kit and change nothing else.</div>
+    <p class="sub">If breakouts are deep, painful, or mainly along the jaw before each period, see a dermatologist in December. That pattern is often hormonal and treats well, but it needs a prescription.</p>
+  </div>
+</section>
+
+<section class="sec" id="skin-time">
+  <h2>Skin timeline to the wedding</h2>
+  <div class="card">
+    <ul class="timeline">
+      <li><b>Now – 6 Dec</b>Cleanser, moisturiser, sunscreen every day. Add niacinamide at night in week 2.</li>
+      <li><b>7 Dec – 3 Jan</b>Add vitamin C in the morning, then salicylic acid two nights a week. If you want a dermatologist's help (peels, marks, stubborn acne), book it in the first half of December so there is time for results.</li>
+      <li><b>By 10 Jan</b>Last date for any new product, peel or procedure. Do a trial of the bridal facial and the makeup now, not later.</li>
+      <li><b>18 – 31 Jan</b>Routine unchanged. Haircut for Shubham and a trim for Avisha about 10 days before.</li>
+      <li><b>Wedding week</b>Final clean-up facial 4–5 days before, using products your skin has met before. Threading and waxing 2–3 days before. Shubham's beard trim 1–2 days before.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ HAIR ============ -->
+<div class="cat" id="cat-hair">Hair</div>
+
+<section class="sec a-only" id="hair-why">
+  <h2>Why hair falls, and the tests</h2>
+  <p class="lede">Heavy shedding almost always has a cause inside the body. Find it first; oils and shampoos only protect what is already growing.</p>
+  <div class="card a">
+    <div class="tw"><table>
+      <thead><tr><th>Common cause</th><th>How to check</th><th>What fixes it</th></tr></thead>
+      <tbody>
+      <tr><td class="w">Low iron stores</td><td>Ferritin (hair does best above roughly 40 ng/mL, even when haemoglobin is normal)</td><td>Iron-rich food with vitamin C; tablets if the doctor prescribes</td></tr>
+      <tr><td class="w">Low B12 or vitamin D</td><td>B12, vitamin D (25-OH)</td><td>Supplement per the result</td></tr>
+      <tr><td class="w">Thyroid</td><td>TSH</td><td>Treatable with medication</td></tr>
+      <tr><td class="w">Too little protein or food</td><td>Your plate</td><td>75–85 g protein a day, no dieting</td></tr>
+      <tr><td class="w">Stress, illness, poor sleep</td><td>Shedding starts 2–3 months after the event</td><td>Settles by itself as the body recovers</td></tr>
+      <tr><td class="w">Hormonal (PCOS)</td><td>Irregular periods, jawline acne, thinning at the parting</td><td>See a gynaecologist or dermatologist</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><strong>See a dermatologist</strong> if you notice a widening parting, bald patches, an itchy or flaky scalp, or if shedding has not eased by early January. Wedding planning is stressful and can add to shedding by itself, so sleep is part of the hair plan.</div>
+  </div>
+</section>
+
+<section class="sec a-only" id="hair-care">
+  <h2>Hair routine</h2>
+  <div class="grid2">
+    <div class="card a">
+      <span class="tag a">Every week</span>
+      <ul>
+        <li><strong>Oil once or twice a week:</strong> coconut oil on the lengths and a 5-minute fingertip scalp massage, 1–2 hours before washing. Overnight is not needed.</li>
+        <li><strong>Wash 2–3 times a week</strong> with a mild shampoo, scalp only. Wash after sweaty gym days; a sweaty scalp left for days sheds more.</li>
+        <li><strong>Conditioner every wash,</strong> mid-length to ends, never on the scalp.</li>
+        <li><strong>Once a week:</strong> curd or aloe mask on the lengths for 20 minutes, for shine.</li>
+      </ul>
+    </div>
+    <div class="card a">
+      <span class="tag a">Handle with care</span>
+      <ul>
+        <li>Wide-tooth comb, starting from the ends. Never brush wet hair hard.</li>
+        <li>Squeeze dry with a cotton T-shirt or microfibre towel; no rubbing.</li>
+        <li>Loose braid or low bun for the gym and for sleep. Tight ponytails pull hair out at the hairline.</li>
+        <li>Satin pillowcase or scarf at night.</li>
+        <li>Keep heat styling for trial days and the functions, always with a heat protectant.</li>
+        <li>No colouring, smoothening or keratin treatment after early January. If you want one, do it in December.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <p><strong>Shubham:</strong> shampoo every 1–2 days after the gym, conditioner twice a week, and the same blood tests. A haircut about 10 days before, with a tidy-up 2 days before.</p>
+    <p class="sub">Rosemary oil and onion juice have thin evidence. They won't hurt if patch-tested, but they are not a substitute for fixing iron, B12 and protein.</p>
+  </div>
+</section>
+
+<section class="sec" id="hair-food">
+  <h2>Food for hair and skin</h2>
+  <div class="card">
+    <div class="tw"><table>
+      <thead><tr><th>Nutrient</th><th>From your kitchen</th><th>Tip</th></tr></thead>
+      <tbody>
+      <tr><td class="w">Protein</td><td>Dal, paneer, curd, soya, chana, sattu</td><td>Hair is made of protein; this is the base</td></tr>
+      <tr><td class="w">Iron</td><td>Saga, palak, sajana saga, kala chana, rajma, masoor, til, ragi, dates</td><td>Always with lemon, amla or tomato. No tea for an hour either side.</td></tr>
+      <tr><td class="w">Vitamin C</td><td>Amla, guava, orange, lemon, capsicum</td><td>One amla or guava a day covers it; also builds skin collagen</td></tr>
+      <tr><td class="w">Omega-3</td><td>1 tbsp ground flax or chia, 2 walnuts</td><td>Daily; helps dry skin and scalp</td></tr>
+      <tr><td class="w">Zinc</td><td>Pumpkin seeds, til, peanuts, chana</td><td>A spoon of mixed seeds on curd or oats</td></tr>
+      <tr><td class="w">Vitamin A, colour</td><td>Carrot, pumpkin, papaya, tomato</td><td>One orange or red vegetable a day for skin tone</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tip"><strong>Cook in an iron kadhai</strong> when making dal, saga or anything with tomato. It adds a useful amount of iron to the food for free.</div>
+  </div>
+</section>
+
+<!-- ============ DAILY ============ -->
+<div class="cat" id="cat-daily">Daily habits</div>
+
+<section class="sec" id="water">
+  <h2>Water</h2>
+  <div class="grid2">
+    <div class="card a a-only"><span class="tag a">Avisha</span><div class="big">2.5 L</div><div class="sub">about 10 glasses, plus a bottle during the gym session</div></div>
+    <div class="card s s-only"><span class="tag s">Shubham</span><div class="big">3.5 L</div><div class="sub">about 14 glasses, plus a bottle during the gym session</div></div>
+  </div>
+  <div class="card">
+    <ul>
+      <li><strong>Make it automatic:</strong> 2 glasses on waking, 1 before each meal, a full bottle at the gym, 1 mid-morning and 1 mid-afternoon. That is already most of the target.</li>
+      <li><strong>Counts as water:</strong> chaas, nimbu pani without sugar, coconut water, plain milk. Tea and coffee half count.</li>
+      <li><strong>Check:</strong> pale yellow urine means you are fine. Dark means drink.</li>
+      <li><strong>Ease off after 8 pm</strong> so sleep isn't broken.</li>
+      <li>Water keeps skin plump and helps training and digestion, but it won't clear acne by itself. More than these amounts adds nothing.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="sleep">
+  <h2>Sleep &amp; stress</h2>
+  <div class="card">
+    <ul>
+      <li><strong>7–8 hours, same bedtime.</strong> Muscle is built and skin is repaired during sleep. Short sleep also raises hunger and sugar cravings the next day.</li>
+      <li><strong>Phones away 30 minutes before bed.</strong> Wedding planning chats can wait for morning.</li>
+      <li><strong>A 10-minute walk after dinner</strong> helps digestion and blood sugar, and is a good time to talk about anything except the guest list.</li>
+      <li><strong>Alcohol:</strong> ideally none until the wedding. It hurts sleep, skin and fat loss all at once.</li>
+      <li><strong>One planned free meal a week</strong> (Sunday lunch) keeps the rest of the week easy to follow.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ FINISH ============ -->
+<div class="cat" id="cat-finish">Finish line</div>
+
+<section class="sec" id="wedweek">
+  <h2>Wedding week · 1–5 Feb</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Training:</strong> two light full-body sessions (Monday and Wednesday at the latest), half your usual sets. Nothing that leaves you sore or risks a strain. Walk daily.</li>
+      <li><strong>Food:</strong> the same home food. No crash diet, no skipping meals, no new dishes or supplements. Go easy on very salty and fried food from Wednesday to avoid puffiness.</li>
+      <li><strong>Water:</strong> normal amounts. Don't cut water to "look lean"; it only makes skin dull and brings headaches.</li>
+      <li><strong>Skin and hair:</strong> the routine you have been doing, nothing new. Carry your own products to the venue.</li>
+      <li><strong>At the functions:</strong> eat a proper protein meal before you leave home so you aren't running on sweets and snacks.</li>
+      <li><strong>Sleep</strong> is the best thing you can do for your face that week.</li>
+    </ul>
+    <div class="tip"><strong>After the wedding:</strong> keep the four gym days. The habit you have built by then is the real result; the wedding is only the first checkpoint.</div>
+  </div>
+</section>
+
+<p id="nores">Nothing matches that search. Try a simpler word like "roti", "iron" or "sunscreen".</p>
+
+<p class="foot">This is general fitness and wellness guidance, not medical advice. Calorie and protein numbers are estimates to adjust by your own results. See a doctor for blood test results, persistent hair fall, painful acne, any injury, or before starting supplements if you have a health condition.</p>
+
+</div></main>
+
+<script>
+(function(){
+  var store = {
+    get:function(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+    set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+  };
+  var DAY=864e5, START=new Date(2026,10,24), WED=new Date(2027,1,5);
+  var today=new Date(); today.setHours(0,0,0,0);
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+
+  /* countdown */
+  var left=Math.max(0,Math.round((WED-today)/DAY)), total=Math.round((WED-START)/DAY);
+  var done=Math.min(total,Math.max(0,Math.round((today-START)/DAY)));
+  document.getElementById('dleft').textContent=left;
+  document.getElementById('wleft').textContent=Math.floor(left/7);
+  var sess=0;
+  for(var d=new Date(Math.max(today,START)); d<new Date(2027,1,1); d=new Date(d.getTime()+DAY)){
+    var wd=d.getDay(); if(wd===1||wd===2||wd===4||wd===5) sess++;
+  }
+  if(today<new Date(2027,1,4)) sess+=2;
+  document.getElementById('sessions').textContent=sess;
+  document.getElementById('prog').style.width=Math.max(1.5,done/total*100)+'%';
+  var phase= today<START?'Starts tomorrow':'Wedding day';
+  document.querySelectorAll('#tl li').forEach(function(li){
+    var f=new Date(li.dataset.from+'T00:00'), t=new Date(li.dataset.to+'T00:00');
+    if(today>=f&&today<=t){li.classList.add('now');phase=li.querySelector('b').textContent}
+  });
+  if(today>WED) phase='Married!';
+  document.getElementById('phase').textContent=phase;
+  if(left===0&&today<=WED) document.querySelector('.hero h1').textContent='Today is the day';
+  if(today>WED) document.querySelector('.hero h1').textContent='Congratulations, Avisha & Shubham';
+
+  /* who toggle */
+  function setWho(w){
+    document.body.dataset.who=w;
+    document.querySelectorAll('.seg button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.who===w)});
+    store.set('wp-who',w);
+  }
+  document.querySelectorAll('.seg button').forEach(function(b){b.addEventListener('click',function(){setWho(b.dataset.who)})});
+  setWho(store.get('wp-who','both'));
+
+  /* tracker: daily + persistent */
+  var dayKey='wp-day-'+iso(today), dayState=store.get(dayKey,{}), perm=store.get('wp-perm',{});
+  document.querySelectorAll('input[data-k]').forEach(function(c){
+    c.checked=!!dayState[c.dataset.k];
+    c.addEventListener('change',function(){dayState[c.dataset.k]=c.checked;store.set(dayKey,dayState)});
+  });
+  document.querySelectorAll('input[data-p]').forEach(function(c){
+    c.checked=!!perm[c.dataset.p];
+    c.addEventListener('change',function(){perm[c.dataset.p]=c.checked;store.set('wp-perm',perm)});
+  });
+  document.querySelectorAll('.glasses').forEach(function(g){
+    var who=g.dataset.water, n=+g.dataset.n, key='w_'+who;
+    function paint(){
+      var c=dayState[key]||0;
+      g.querySelectorAll('.glass').forEach(function(b,i){b.classList.toggle('full',i<c);b.setAttribute('aria-pressed',i<c)});
+    }
+    for(var i=0;i<n;i++){(function(i){
+      var b=document.createElement('button');b.className='glass';b.type='button';b.setAttribute('aria-label','Glass '+(i+1)+' of '+n);
+      b.addEventListener('click',function(){var c=dayState[key]||0;dayState[key]=(c===i+1)?i:i+1;store.set(dayKey,dayState);paint()});
+      g.appendChild(b);
+    })(i)}
+    paint();
+  });
+
+  /* search */
+  var q=document.getElementById('q'), nores=document.getElementById('nores');
+  q.addEventListener('input',function(){
+    var s=q.value.trim().toLowerCase(), any=false;
+    document.querySelectorAll('.sec').forEach(function(sec){
+      var hit=!s||sec.textContent.toLowerCase().indexOf(s)>-1;
+      sec.style.display=hit?'':'none'; if(hit) any=true;
+      if(s&&hit) sec.querySelectorAll('details').forEach(function(d){if(d.textContent.toLowerCase().indexOf(s)>-1)d.open=true});
+    });
+    document.querySelectorAll('.cat').forEach(function(c){c.style.display=s?'none':''});
+    document.querySelector('.hero').style.display=s?'none':'';
+    nores.style.display=any?'none':'block';
+    if(s) window.scrollTo(0,0);
+  });
+
+  /* nav: drawer + scrollspy */
+  var body=document.body;
+  document.getElementById('menuBtn').addEventListener('click',function(){body.classList.toggle('open')});
+  document.getElementById('scrim').addEventListener('click',function(){body.classList.remove('open')});
+  var links={};
+  document.querySelectorAll('#nav a').forEach(function(a){
+    links[a.getAttribute('href').slice(1)]=a;
+    a.addEventListener('click',function(){body.classList.remove('open')});
+  });
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting&&links[e.target.id]){
+          Object.keys(links).forEach(function(k){links[k].classList.remove('on')});
+          links[e.target.id].classList.add('on');
+        }
+      });
+    },{rootMargin:'-15% 0px -75% 0px'});
+    document.querySelectorAll('.sec, .hero').forEach(function(s){io.observe(s)});
+  }
+})();
+</script>
+</body>
+</html>
